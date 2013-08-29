@@ -10,6 +10,12 @@ Currently this will test against the Google OAuth2 api's.  i've created a sample
 
 The index page will not show much, so open up dev tools to see the console output.
 
+## UPDATE:
+
+i've add a pipe with an "Authorizer"( this is a new setting ),
+
+a pipe.read basically just wraps the `callService` method( which i've renamed to `read` )
+
 
 ### Current Flow
 
