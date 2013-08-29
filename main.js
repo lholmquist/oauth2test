@@ -1,5 +1,7 @@
 var thing = AeroGear.Authorization();
 
+var responseFromAuthEndpoint;
+
 thing.add({
     name: "coolThing",
     settings: {
@@ -13,8 +15,8 @@ thing.add({
     }
 });
 
-function authorize() {
-    thing.services.coolThing.authorize({
+function validate() {
+    thing.services.coolThing.validate( responseFromAuthEndpoint, {
         success: function( response ){
             console.log( "Should be response from Validating the access token", response );
             callService();
@@ -38,4 +40,4 @@ function callService() {
     });
 }
 
-authorize();
+callService();
