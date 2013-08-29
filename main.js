@@ -1,4 +1,5 @@
-var thing = AeroGear.Authorization();
+var thing = AeroGear.Authorization(),
+    pipeThing = AeroGear.Pipeline();
 
 var responseFromAuthEndpoint;
 
@@ -12,6 +13,16 @@ thing.add({
         revokeURL: "https://accounts.google.com/o/oauth2/revoke",
         scopes: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar.readonly",
         prompt: "force"
+    }
+});
+
+
+pipeThing.add({
+    name: "pipeCoolThing",
+    settings:{
+        baseURL: "https://www.googleapis.com/",
+        endpoint: "oauth2/v2/userinfo",
+        authorizer: thing.services.coolThing
     }
 });
 
@@ -29,8 +40,8 @@ function validate() {
 
 
 function callService() {
-    thing.services.coolThing.callService({
-        serviceURL: "https://www.googleapis.com/oauth2/v2/userinfo",
+    thing.services.coolThing.read({
+        url: "https://www.googleapis.com/oauth2/v2/userinfo",
         success: function( response ){
             console.log( "Should be the response from the call", response );
         },
@@ -40,4 +51,15 @@ function callService() {
     });
 }
 
-callService();
+function callPipeRead() {
+    pipeThing.pipes.pipeCoolThing.read({
+        success:function( response ) {
+            console.log( "response pipe", response );
+        },
+        error: function( error ) {
+            console.log( "error pipe", error );
+        }
+    });
+}
+
+callPipeRead();
